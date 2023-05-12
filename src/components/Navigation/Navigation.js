@@ -1,20 +1,40 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./navigation.css";
+import { useCart } from "../../Providers/CartProvider";
 
 const Navigation = () => {
+  const { cart } = useCart();
   return (
     <header className="mainNavigation">
       <nav>
-      <div className="shopLabel">Amir Shopping</div>
         <ul>
           <li>
-            <NavLink to={"/"}>Home</NavLink>
+            <NavLink
+              to={"/"}
+              className={(navData) =>
+                navData.isActive ? "activeItemNavigation" : ""
+              }
+            >
+              Home
+            </NavLink>
           </li>
-          <li>
-            <NavLink to={"/cart"}>Cart</NavLink>
+          <li className="cartLink">
+            <NavLink
+              to={"/cart"}
+              className={(navData) =>
+                navData.isActive ? "activeItemNavigation" : ""
+              }
+            >
+              Cart
+            </NavLink>
+              <span>{cart.length}</span>
           </li>
         </ul>
+        <div className="shopLabel">Amir Shopping</div>
+  
+   
+     
       </nav>
     </header>
   );
