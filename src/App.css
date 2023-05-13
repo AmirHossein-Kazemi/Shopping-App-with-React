@@ -63,6 +63,7 @@ body {
 }
 
 button:disabled {
+  outline: none;
   cursor: not-allowed;
   background-color: #ccc;
   color: #444;

@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../common/Input";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import "./signup.css";
+import { Link, useNavigate } from "react-router-dom";
+import { signupUser } from "../../Services/signupService";
+import { toast } from "react-toastify";
+import { useAuth, useAuthActions } from "../../Providers/AuthProvider";
+import { useQuery } from "../../hooks/useQuery";
 
 const initialValues = {
   name: "",
@@ -11,14 +15,6 @@ const initialValues = {
   number: "",
   password: "",
   passConfirm: "",
-};
-
-const onSubmit = (values) => {
-  console.log(values);
-  // axios
-  //   .post("http://localhost:3001/users", values)
-  //   .then((res) => console.log(res.data))
-  //   .catch((err) => console.log(err));
 };
 
 const validationSchema = Yup.object({
@@ -36,7 +32,7 @@ const validationSchema = Yup.object({
     .required("Password is Required")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*?])(?=.{8,})/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      "Must Contain 8 Characters, Uppercase, Lowercase, Number and Special Character"
     ),
   passConfirm: Yup.string()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
@@ -44,6 +40,44 @@ const validationSchema = Yup.object({
 });
 
 const Signup = () => {
+  const query = useQuery();
+  const redirect = query.get("redirect") || "/";
+
+  const navigate = useNavigate();
+
+  const setAuth = useAuthActions();
+  const auth = useAuth();
+
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  useEffect(() => {
+    if (auth) {
+      navigate(redirect);
+    }
+  }, [redirect, auth]);
+
+  const onSubmit = async (values) => {
+    const { name, email, number, password } = values;
+
+    const userData = {
+      name,
+      email,
+      number,
+      password,
+    };
+    try {
+      const { data } = await signupUser(userData);
+      setAuth(data);
+      setErrorMessage(null);
+      navigate(redirect);
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setErrorMessage(error.response.data.message);
+        toast.error(errorMessage);
+      }
+    }
+  };
+
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit,
@@ -70,9 +104,17 @@ const Signup = () => {
           label="Password Confirmation"
           type="password"
         />
-        <button className="btn" style={{width:"100%"}} type="submit" disabled={!formik.isValid}>
-          Submit
+        <button
+          className="btn"
+          style={{ width: "100%" }}
+          type="submit"
+          disabled={!formik.isValid}
+        >
+          Signup
         </button>
+        <Link to={`/login?redirect=${redirect}`}>
+          <p style={{ marginTop: "1rem" }}> Have an Account ?</p>
+        </Link>
       </form>
     </div>
   );
