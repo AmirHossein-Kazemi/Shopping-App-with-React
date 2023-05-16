@@ -69,3 +69,14 @@ button:disabled {
   color: #444;
 }
 
+@media screen and (max-width: 768px) {
+  .container {
+    max-width: 750px;
+    margin: 0 1rem;
+    margin-top: 6rem;
+  }
+  .productList {
+    grid-row-gap: 2rem;
+    grid-column-gap: 0;
+  }
+}

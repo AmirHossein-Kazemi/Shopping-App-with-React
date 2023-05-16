@@ -7,7 +7,7 @@ import "./login-sign.css";
 const SignupPage = () => {
   return (
     <Layout>
-      <div className="formContainer">
+      <div className="formContainer container">
         <h1>Signup</h1>
         <Signup />
       </div>

@@ -55,7 +55,7 @@ const Carts = () => {
           </section>
         </main>
       ) : (
-        <p>Cart Item is Empty !!</p>
+        <p className="container">Cart Item is Empty !!</p>
       )}
     </Layout>
   );

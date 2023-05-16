@@ -27,7 +27,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const setAuth = useAuthActions();
-  const auth = useAuth()
+  const auth = useAuth();
 
   useEffect(() => {
     if (auth) {

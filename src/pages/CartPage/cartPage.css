@@ -85,3 +85,19 @@
   border-left: 0;
   border-right: 0;
 }
+
+@media screen and (max-width: 768px) {
+  .cartItem .itemImg {
+    width: 90px;
+    height: 80px;
+  }
+  .cartCenter {
+    display: block;
+  }
+  .cartItemList {
+    margin-bottom: 2rem;
+  }
+  .cartSummery {
+    width: 70%;
+  }
+}

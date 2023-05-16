@@ -39,6 +39,17 @@ select {
   border-radius: 5px;
 }
 
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  select {
+    width: auto;
+    min-width: 300px;
+  }
+}
+
 .formControl {
   margin-bottom: 20px;
 }

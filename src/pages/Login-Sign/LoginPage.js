@@ -5,7 +5,7 @@ import Login from "../../components/Login/Login";
 const LoginPage = () => {
   return (
     <Layout>
-      <div className="formContainer">
+      <div className="formContainer container">
         <h1>Login</h1>
         <Login />
       </div>
